@@ -21,7 +21,7 @@ export default function Dashboard() {
 
     function fetchusers() {
         if (userId) {
-            axios.post("http://localhost:1000/fetchusers", {
+            axios.post("https://backend-6-r5ox.onrender.com/fetchusers", {
                 Id: userId
             }).then((succ) => {
                 // setusers(succ.data);
@@ -37,7 +37,7 @@ export default function Dashboard() {
     }, [userId])
 
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchmenu").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu").then((succ) => {
             cardss[2].number = succ.data.length;
             setcardss([...cardss]);
         })
@@ -49,7 +49,7 @@ export default function Dashboard() {
 
 
     function fetchbestsellers() {
-        axios.post("http://localhost:1000/fetchdishes").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchdishes").then((succ) => {
             cardss[1].number = succ.data.length;
             setcardss([...cardss]);
         })
@@ -60,7 +60,7 @@ export default function Dashboard() {
     }, [])
 
     function fetchflavours() {
-        axios.post("http://localhost:1000/fetchflavours").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchflavours").then((succ) => {
             // setflavour(succ.data);
             cardss[3].number = succ.data.length;
             setcardss([...cardss]);

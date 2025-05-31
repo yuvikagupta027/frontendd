@@ -19,14 +19,14 @@ export default function Navbar2() {
     }
 
     function fetchcart() {
-        axios.post("http://localhost:1000/fetchcart", { id }).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchcart", { id }).then((succ) => {
             setcartt(succ.data);
             // console.log("Cart updated:", succ.data);
         }).catch((err) => console.error("Error fetching cart:", err));
     }
 
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchmenu")
+        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu")
             .then((succ) => setdishes(succ.data))
             .catch((err) => ("Error fetching menu", err));
     }
@@ -44,7 +44,7 @@ export default function Navbar2() {
             CartValue: 1,
             userId: userId,
         };
-        axios.post("http://localhost:1000/addtocart", cartItem).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/addtocart", cartItem).then((succ) => {
             console.log(succ.data);
             fetchcart();
         }).catch((err) => console.error("Error adding to cart:", err));
@@ -54,12 +54,12 @@ export default function Navbar2() {
     const [cartt, setcartt] = useState([]);
 
     function incre(id) {
-        axios.post("http://localhost:1000/increasecart", { _id: id }).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/increasecart", { _id: id }).then((succ) => {
             fetchcart();
         })
     }
     function decre(id) {
-        axios.post("http://localhost:1000/decreasecart", { _id: id }).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/decreasecart", { _id: id }).then((succ) => {
             fetchcart();
         })
     }
@@ -73,7 +73,7 @@ export default function Navbar2() {
     }
 
     function deletee(x) {
-        axios.post("http://localhost:1000/deleteitem", {
+        axios.post("https://backend-6-r5ox.onrender.com/deleteitem", {
             Id: x
         }).then((succ) => {
             if (succ.data == "ok") {

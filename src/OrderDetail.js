@@ -13,7 +13,7 @@ export default function OrderDetail() {
 
     function fetchcart() {
         if (idd && userId) {
-            axios.post("http://localhost:1000/fetchorder", { id: userId, idd: idd }).then((res) => {
+            axios.post("https://backend-6-r5ox.onrender.com/fetchorder", { id: userId, idd: idd }).then((res) => {
                 setcartt([res.data]);
             }).catch((err) => console.error("Error fetching cart:", err));
         }
@@ -25,7 +25,7 @@ export default function OrderDetail() {
     function cancelOrder(orderId) {
         console.log("Cancelling order with ID:", orderId);
         if (window.confirm("Are you sure you want to cancel this order?")) {
-            axios.post("http://localhost:1000/cancelorder", { id: orderId })
+            axios.post("https://backend-6-r5ox.onrender.com/cancelorder", { id: orderId })
                 .then((succ) => {
                     if (succ.data === "ok") {
                         alert("Order cancelled successfully!");

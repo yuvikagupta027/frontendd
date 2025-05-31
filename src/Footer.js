@@ -23,7 +23,7 @@ export default function Footer() {
         const data = new FormData(e.currentTarget);
         const email = data.get("email");
 
-        axios.post("http://localhost:1000/submitemailfooter", {
+        axios.post("https://backend-6-r5ox.onrender.com/submitemailfooter", {
             email: email,
         }).then((response) => {
             console.log(response.data);

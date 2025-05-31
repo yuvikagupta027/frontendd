@@ -10,7 +10,7 @@ export default function Orders() {
     var navi = useNavigate();
 
     function fetchcart() {
-        axios.post("http://localhost:1000/fetchorders", { id: userId })
+        axios.post("https://backend-6-r5ox.onrender.com/fetchorders", { id: userId })
             .then((succ) => {
                 setcartt(succ.data);
             })
@@ -24,7 +24,7 @@ export default function Orders() {
     function cancelOrder(orderId) {
         console.log("Cancelling order with ID:", orderId);
         if (window.confirm("Are you sure you want to cancel this order?")) {
-            axios.post("http://localhost:1000/cancelorder", { id: orderId })
+            axios.post("https://backend-6-r5ox.onrender.com/cancelorder", { id: orderId })
                 .then((succ) => {
                     // console.log(succ.data, "yes");
                     if (succ.data === "ok") {

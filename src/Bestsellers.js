@@ -8,7 +8,7 @@ export default function Bestsellers() {
     const [seldishes, setseldishes] = useState(0);
 
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchdishes").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchdishes").then((succ) => {
             setdishes(succ.data);
         })
     }

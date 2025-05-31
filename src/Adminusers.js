@@ -12,7 +12,7 @@ export default function Adminusers() {
 
     function fetchusers() {
         if (userId) {
-            axios.post("http://localhost:1000/fetchusers", {
+            axios.post("https://backend-6-r5ox.onrender.com/fetchusers", {
                 Id: userId
             }).then((succ) => {
                 setusers(succ.data);
@@ -26,7 +26,7 @@ export default function Adminusers() {
     }, [userId])
 
     function deleteee(x) {
-        axios.post("http://localhost:1000/deleteuser", {
+        axios.post("https://backend-6-r5ox.onrender.com/deleteuser", {
             Id: x
         }).then((succ) => {
             if (succ.data === "okk") {

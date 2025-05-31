@@ -10,7 +10,7 @@ export default function Adminaddress() {
     const id = useState(localStorage.getItem("userlogin"))
 
     function fetchaddress() {
-        axios.post("http://localhost:1000/fetchaddress", { id }).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchaddress", { id }).then((succ) => {
             setaddress(succ.data);
         })
     }
@@ -19,7 +19,7 @@ export default function Adminaddress() {
     }, [])
 
     function deleteee(x) {
-        axios.post("http://localhost:1000/deleteaddress", {
+        axios.post("https://backend-6-r5ox.onrender.com/deleteaddress", {
             Id: x
         }).then((succ) => {
             if (succ.data === "okk") {
