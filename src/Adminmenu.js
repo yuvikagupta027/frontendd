@@ -14,7 +14,7 @@ export default function Adminmenu() {
     //     var image = data.get("image");
     //     var price = data.get("price");
 
-    //     axios.post("http://localhost:1000/addinmenu", {
+    //     axios.post("https://backend-6-r5ox.onrender.com/addinmenu", {
     //         Title: title,
     //         Desc: desc,
     //         Image: image,
@@ -44,7 +44,7 @@ export default function Adminmenu() {
             bestseller = false;
         }
 
-        axios.post("http://localhost:1000/addinmenu", {
+        axios.post("https://backend-6-r5ox.onrender.com/addinmenu", {
             Title: title,
             Desc: desc,
             Image: image,
@@ -64,7 +64,7 @@ export default function Adminmenu() {
     const [dishes, setdishes] = useState([]);
 
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchmenu").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu").then((succ) => {
             setdishes(succ.data);
         })
     }
@@ -74,7 +74,7 @@ export default function Adminmenu() {
     }, [])
 
     function deleteee(x) {
-        axios.post("http://localhost:1000/deletefrommenu", {
+        axios.post("https://backend-6-r5ox.onrender.com/deletefrommenu", {
             Id: x
         }).then((succ) => {
             if (succ.data === "okk") {

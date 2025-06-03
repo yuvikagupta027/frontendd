@@ -14,7 +14,7 @@ export default function Dishes() {
         var image = data.get("image");
         var price = data.get("price");
 
-        axios.post("http://localhost:1000/adddishes", {
+        axios.post("https://backend-6-r5ox.onrender.com/adddishes", {
             Title: title,
             Desc: desc,
             Image: image,
@@ -32,7 +32,7 @@ export default function Dishes() {
     const [dishes, setdishes] = useState([]);
 
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchdishes").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchdishes").then((succ) => {
             setdishes(succ.data);
         })
     }
@@ -42,7 +42,7 @@ export default function Dishes() {
     }, [])
 
     function deleteee(x) {
-        axios.post("http://localhost:1000/deletedish", {
+        axios.post("https://backend-6-r5ox.onrender.com/deletedish", {
             Id: x
         }).then((succ) => {
             if (succ.data === "okk") {

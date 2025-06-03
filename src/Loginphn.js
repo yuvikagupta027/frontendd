@@ -16,7 +16,7 @@ export default function Loginphn() {
         var email = data.get("email");
         var password = data.get("password")
 
-        axios.post("http://localhost:1000/registerform", {
+        axios.post("https://backend-6-r5ox.onrender.com/registerform", {
             Username: username,
             Email: email,
             Password: password
@@ -34,7 +34,7 @@ export default function Loginphn() {
         var email = data.get("email");
         var password = data.get("password");
 
-        axios.post("http://localhost:1000/loginform", {
+        axios.post("https://backend-6-r5ox.onrender.com/loginform", {
             Email: email,
             Password: password
         }).then((succ) => {
@@ -50,7 +50,7 @@ export default function Loginphn() {
         // console.log(id);
         if (id != null) {
             // console.log("yes");
-            axios.post("http://localhost:1000/logincheck", { Id: id }).then((succ) => {
+            axios.post("https://backend-6-r5ox.onrender.com/logincheck", { Id: id }).then((succ) => {
                 console.log(succ);
                 if (succ.data) {
                     navi("/")

@@ -5,7 +5,7 @@ export default function Flavours() {
     const [flavour, setflavour] = useState([]);
 
     function fetchflavours() {
-        axios.post("http://localhost:1000/fetchflavours").then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchflavours").then((succ) => {
             setflavour(succ.data);
         });
     }

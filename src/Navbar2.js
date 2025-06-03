@@ -24,13 +24,13 @@ export default function Navbar2() {
     }
 
     function fetchcart() {
-        axios.post("http://localhost:1000/fetchcart", { id })
+        axios.post("https://backend-6-r5ox.onrender.com/fetchcart", { id })
             .then((succ) => setcartt(succ.data))
             .catch((err) => console.error("Error fetching cart:", err));
     }
 
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchmenu")
+        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu")
             .then((succ) => setdishes(succ.data))
             .catch((err) => console.error("Error fetching menu:", err));
     }
@@ -44,21 +44,21 @@ export default function Navbar2() {
         const userId = localStorage.getItem('userlogin');
         const { _id, ...rest } = row;
         const cartItem = { ...rest, CartValue: 1, userId };
-        axios.post("http://localhost:1000/addtocart", cartItem)
+        axios.post("https://backend-6-r5ox.onrender.com/addtocart", cartItem)
             .then(() => fetchcart())
             .catch((err) => console.error("Error adding to cart:", err));
     }
 
     function incre(id) {
-        axios.post("http://localhost:1000/increasecart", { _id: id }).then(() => fetchcart());
+        axios.post("https://backend-6-r5ox.onrender.com/increasecart", { _id: id }).then(() => fetchcart());
     }
 
     function decre(id) {
-        axios.post("http://localhost:1000/decreasecart", { _id: id }).then(() => fetchcart());
+        axios.post("https://backend-6-r5ox.onrender.com/decreasecart", { _id: id }).then(() => fetchcart());
     }
 
     function deletee(x) {
-        axios.post("http://localhost:1000/deleteitem", { Id: x })
+        axios.post("https://backend-6-r5ox.onrender.com/deleteitem", { Id: x })
             .then((succ) => {
                 if (succ.data === "ok") {
                     alert("Item deleted successfully");

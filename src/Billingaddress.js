@@ -12,13 +12,13 @@ export default function Billingaddress() {
     var navi = useNavigate();
 
     function fetchcart() {
-        axios.post("http://localhost:1000/fetchcart", { id }).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchcart", { id }).then((succ) => {
             setcartt(succ.data);
             // console.log("Cart updated:", succ.data);
         }).catch((err) => console.error("Error fetching cart:", err));
     }
     function fetchdishes() {
-        axios.post("http://localhost:1000/fetchmenu")
+        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu")
             .then((succ) => setdishes(succ.data))
             .catch((err) => ("Error fetching menu", err));
     }
@@ -61,7 +61,7 @@ export default function Billingaddress() {
         var contact = data.get("contact");
         var userId = localStorage.getItem('userlogin');
 
-        axios.post("http://localhost:1000/submitaddress", {
+        axios.post("https://backend-6-r5ox.onrender.com/submitaddress", {
             Email: email,
             Firstname: firstname,
             Lastname: lastname,
@@ -82,7 +82,7 @@ export default function Billingaddress() {
     const [address, setaddress] = useState([]);
 
     function fetchaddress() {
-        axios.post("http://localhost:1000/fetchaddress", { id }).then((succ) => {
+        axios.post("https://backend-6-r5ox.onrender.com/fetchaddress", { id }).then((succ) => {
             setaddress(succ.data);
         })
     }
@@ -108,7 +108,7 @@ export default function Billingaddress() {
             };
             // console.log(orderData);
 
-            axios.post("http://localhost:1000/placeorder", orderData).then((succ) => {
+            axios.post("https://backend-6-r5ox.onrender.com/placeorder", orderData).then((succ) => {
                 console.log("Order placed:", succ.data);
                 alert("Order placed successfully!");
                 navi("/Orders");
