@@ -12,7 +12,7 @@ export default function Adminloginn() {
         var email = data.get("email");
         var password = data.get("password");
 
-        axios.post("https://backend-6-r5ox.onrender.com/loginadmin", {
+        axios.post("http://localhost:1000/loginadmin", {
             Email: email,
             Password: password,
         }).then((succ) => {
@@ -33,15 +33,16 @@ export default function Adminloginn() {
     const [id, setid] = useState(localStorage.getItem("adminlogin"));
 
     function checkuser() {
-        // console.log(id);
-        if (id != null) {
-            // console.log("yes");
-            axios.post("https://backend-6-r5ox.onrender.com/adminlogincheck", { Id: id }).then((succ) => {
-                console.log(succ);
-                if (succ.data) {
-                    navi("/Dashboard")
-                }
-            })
+        if (id) {
+            axios.post("http://localhost:1000/adminlogincheck", { Id: id })
+                .then((response) => {
+                    if (response.data) {
+                        navi("/Dashboard");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Check user error:", error);
+                });
         }
     }
 

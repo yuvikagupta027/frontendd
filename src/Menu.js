@@ -17,7 +17,7 @@ export default function Menu() {
     const [lod, setlod] = useState(false);
 
     function fetchdishes() {
-        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu")
+        axios.post("http://localhost:1000/fetchmenu")
             .then((succ) => setdishes(succ.data))
             .catch((err) => ("Error fetching menu", err));
     }
@@ -32,7 +32,7 @@ export default function Menu() {
             userId: userId,
         };
 
-        axios.post("https://backend-6-r5ox.onrender.com/addtocart", cartItem).then((succ) => {
+        axios.post("http://localhost:1000/addtocart", cartItem).then((succ) => {
             if (succ.data == "ok") {
                 alert("item added successfully");
                 fetchcart();
@@ -51,7 +51,7 @@ export default function Menu() {
 
     function fetchcart() {
         const userId = localStorage.getItem('userlogin');
-        axios.post("https://backend-6-r5ox.onrender.com/fetchcart", { id: userId }).then((succ) => {
+        axios.post("http://localhost:1000/fetchcart", { id: userId }).then((succ) => {
             setcartt(succ.data);
             var ar = [];
             for (let i = 0; i < succ.data.length; i++) {
@@ -70,7 +70,7 @@ export default function Menu() {
     }, [])
 
     function deletee(x) {
-        axios.post("https://backend-6-r5ox.onrender.com/deleteitem", {
+        axios.post("http://localhost:1000/deleteitem", {
             Id: x
         }).then((succ) => {
             if (succ.data == "ok") {
@@ -81,12 +81,12 @@ export default function Menu() {
     }
 
     function incre(id) {
-        axios.post("https://backend-6-r5ox.onrender.com/increasecart", { _id: id }).then((succ) => {
+        axios.post("http://localhost:1000/increasecart", { _id: id }).then((succ) => {
             fetchcart();
         })
     }
     function decre(id) {
-        axios.post("https://backend-6-r5ox.onrender.com/decreasecart", { _id: id }).then((succ) => {
+        axios.post("http://localhost:1000/decreasecart", { _id: id }).then((succ) => {
             fetchcart();
         })
     }

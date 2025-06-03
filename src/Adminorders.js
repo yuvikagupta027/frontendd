@@ -13,7 +13,7 @@ export default function Adminorders() {
     var navi = useNavigate();
 
     function fetchcart() {
-        axios.post("https://backend-6-r5ox.onrender.com/fetchorders", { id: userId })
+        axios.post("http://localhost:1000/fetchorders", { id: userId })
             .then((res) => {
                 setcartt(res.data);
                 // setcartItems(res.data);
@@ -27,7 +27,7 @@ export default function Adminorders() {
     }, [userId]);
 
     function deleteee(x) {
-        axios.post("https://backend-6-r5ox.onrender.com/deleteorders", {
+        axios.post("http://localhost:1000/deleteorders", {
             Id: x
         }).then((succ) => {
             if (succ.data === "okk") {
@@ -39,7 +39,7 @@ export default function Adminorders() {
 
     function markAsDelivered(orderId) {
         if (window.confirm("Mark this order as Delivered?")) {
-            axios.post("https://backend-6-r5ox.onrender.com/deliverorder", { id: orderId })
+            axios.post("http://localhost:1000/deliverorder", { id: orderId })
                 .then((succ) => {
                     if (succ.data === "ok") {
                         alert("Order marked as Delivered!");

@@ -9,26 +9,6 @@ export default function Login() {
 
     const [showRegister, setShowRegister] = useState(false);
 
-    // function submitregistration(e) {
-    //     e.preventDefault();
-    //     var data = new FormData(e.currentTarget);
-    //     var username = data.get("username");
-    //     var email = data.get("email");
-    //     var password = data.get("password")
-
-    //     axios.post("https://backend-6-r5ox.onrender.com/registerform", {
-    //         Username: username,
-    //         Email: email,
-    //         Password: password
-    //     }).then((succ) => {
-    //         console.log(succ.data);
-    //         alert("User Registered")
-    //         localStorage.setItem("userlogin", succ.data.insertedId)
-    //         e.target.username.focus();
-    //         e.target.reset();
-    //         navi("/")
-    //     })
-    // }
     function submitregistration(e) {
         e.preventDefault();
         var data = new FormData(e.currentTarget);
@@ -36,7 +16,7 @@ export default function Login() {
         var email = data.get("email");
         var password = data.get("password");
 
-        axios.post("https://backend-6-r5ox.onrender.com/registerform", {
+        axios.post("http://localhost:1000/registerform", {
             Username: username,
             Email: email,
             Password: password
@@ -57,29 +37,13 @@ export default function Login() {
         })
     }
 
-    // function submitlogin(e) {
-    //     e.preventDefault();
-    //     var data = new FormData(e.currentTarget);
-    //     var email = data.get("email");
-    //     var password = data.get("password");
-
-    //     axios.post("https://backend-6-r5ox.onrender.com/loginform", {
-    //         Email: email,
-    //         Password: password
-    //     }).then((succ) => {
-    //         console.log(succ.data);
-    //         localStorage.setItem("userlogin", succ.data._id)
-    //         navi("/");
-    //     })
-    // }
-
     function submitlogin(e) {
         e.preventDefault();
         var data = new FormData(e.currentTarget);
         var email = data.get("email");
         var password = data.get("password");
 
-        axios.post("https://backend-6-r5ox.onrender.com/loginform", {
+        axios.post("http://localhost:1000/loginform", {
             Email: email,
             Password: password
         }).then((succ) => {
@@ -102,7 +66,7 @@ export default function Login() {
         // console.log(id);
         if (id != null) {
             // console.log("yes");
-            axios.post("https://backend-6-r5ox.onrender.com/logincheck", { Id: id }).then((succ) => {
+            axios.post("http://localhost:1000/logincheck", { Id: id }).then((succ) => {
                 console.log(succ);
                 if (succ.data) {
                     navi("/")
@@ -111,21 +75,6 @@ export default function Login() {
         }
     }
 
-
-
-    // function checkpass() {
-    //     if (id != null) {
-    //         axios.post("https://backend-6-r5ox.onrender.com/passcheck", { Id: id }).then((succ) => {
-    //             console.log(succ);
-    //             if (succ.data) {
-    //                 // If password is correct or pass validation succeeded
-    //                 navi("/");
-    //             }
-    //         }).catch((err) => {
-    //             console.error(err);
-    //         });
-    //     }
-    // }
     useEffect(() => {
         setTimeout(() => {
             checkuser();

@@ -14,7 +14,7 @@ export default function Adminorderdetails() {
 
     function fetchcart() {
         if (idd && userId) {
-            axios.post("https://backend-6-r5ox.onrender.com/fetchorder", { id: userId, idd: idd }).then((res) => {
+            axios.post("http://localhost:1000/fetchorder", { id: userId, idd: idd }).then((res) => {
                 setcartt([res.data]);
             }).catch((err) => console.error("Error fetching cart:", err));
         }
@@ -25,7 +25,7 @@ export default function Adminorderdetails() {
 
     function markAsDelivered(orderId) {
         if (window.confirm("Mark this order as Delivered?")) {
-            axios.post("https://backend-6-r5ox.onrender.com/deliverorder", { id: orderId })
+            axios.post("http://localhost:1000/deliverorder", { id: orderId })
                 .then((succ) => {
                     if (succ.data === "ok") {
                         alert("Order marked as Delivered!");

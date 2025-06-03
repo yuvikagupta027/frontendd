@@ -3,108 +3,84 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdDelete, MdLogout } from "react-icons/md";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Offcanvas } from "bootstrap/dist/js/bootstrap.bundle";
 
 export default function Navbar2() {
+    const [dishes, setdishes] = useState([]);
+    const [cartt, setcartt] = useState([]);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [totalam, settotalam] = useState(0);
+    const shipping = 20;
+    const grandTotal = totalam + shipping;
 
-    var id = localStorage.getItem("userlogin");
-    var navi = useNavigate();
- 
+    const id = localStorage.getItem("userlogin");
+    const navi = useNavigate();
+
     function logoutt() {
         if (id) {
             localStorage.removeItem("userlogin");
-            alert("User Logged Out")
-            navi("/")
+            alert("User Logged Out");
+            navi("/");
         }
     }
 
     function fetchcart() {
-        axios.post("https://backend-6-r5ox.onrender.com/fetchcart", { id }).then((succ) => {
-            setcartt(succ.data);
-            // console.log("Cart updated:", succ.data);
-        }).catch((err) => console.error("Error fetching cart:", err));
+        axios.post("http://localhost:1000/fetchcart", { id })
+            .then((succ) => setcartt(succ.data))
+            .catch((err) => console.error("Error fetching cart:", err));
     }
 
     function fetchdishes() {
-        axios.post("https://backend-6-r5ox.onrender.com/fetchmenu")
+        axios.post("http://localhost:1000/fetchmenu")
             .then((succ) => setdishes(succ.data))
-            .catch((err) => ("Error fetching menu", err));
+            .catch((err) => console.error("Error fetching menu:", err));
     }
 
     useEffect(() => {
         fetchcart();
         fetchdishes();
-    }, [])
+    }, []);
 
     function addtocart(row) {
-        var userId = localStorage.getItem('userlogin');
+        const userId = localStorage.getItem('userlogin');
         const { _id, ...rest } = row;
-        const cartItem = {
-            ...rest,
-            CartValue: 1,
-            userId: userId,
-        };
-        axios.post("https://backend-6-r5ox.onrender.com/addtocart", cartItem).then((succ) => {
-            console.log(succ.data);
-            fetchcart();
-        }).catch((err) => console.error("Error adding to cart:", err));
+        const cartItem = { ...rest, CartValue: 1, userId };
+        axios.post("http://localhost:1000/addtocart", cartItem)
+            .then(() => fetchcart())
+            .catch((err) => console.error("Error adding to cart:", err));
     }
-
-    const [dishes, setdishes] = useState([]);
-    const [cartt, setcartt] = useState([]);
 
     function incre(id) {
-        axios.post("https://backend-6-r5ox.onrender.com/increasecart", { _id: id }).then((succ) => {
-            fetchcart();
-        })
-    }
-    function decre(id) {
-        axios.post("https://backend-6-r5ox.onrender.com/decreasecart", { _id: id }).then((succ) => {
-            fetchcart();
-        })
+        axios.post("http://localhost:1000/increasecart", { _id: id }).then(() => fetchcart());
     }
 
-    function checkValue(item) {
-        if (item.CartValue <= 1) {
-            decre(item._id);
-        } else {
-            incre(item._id);
-        }
+    function decre(id) {
+        axios.post("http://localhost:1000/decreasecart", { _id: id }).then(() => fetchcart());
     }
 
     function deletee(x) {
-        axios.post("https://backend-6-r5ox.onrender.com/deleteitem", {
-            Id: x
-        }).then((succ) => {
-            if (succ.data == "ok") {
-                alert("item deleted successfully");
-            }
-        })
+        axios.post("http://localhost:1000/deleteitem", { Id: x })
+            .then((succ) => {
+                if (succ.data === "ok") {
+                    alert("Item deleted successfully");
+                    fetchcart();
+                }
+            });
     }
-
-    const [totalam, settotalam] = useState(0);
-    const shipping = 20;
-    const grandTotal = totalam + shipping;
 
     function calculate() {
         let newTotal = 0;
-        for (let i = 0; i < cartt.length; i++) {
-            const item = cartt[i];
+        for (let item of cartt) {
             newTotal += item.CartValue * item.Price;
         }
         settotalam(newTotal);
-        console.log(newTotal);
     }
+
     useEffect(() => {
         calculate();
     }, [cartt]);
 
     function handleContinue() {
-        const offcanvasElement = document.getElementById('myoff');
-        const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
-        if (offcanvasInstance) {
-            offcanvasInstance.hide();
-        }
+        setIsCartOpen(false);
         navi("/Billingaddress");
     }
 
@@ -121,13 +97,13 @@ export default function Navbar2() {
                     <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
                         <ul className="navbar-nav mx-auto text-center">
                             <>
-                                <Link to={"/"}>
+                                <Link to="/">
                                     <li className="nav-item ms-3 me-3 text-light btn btn-custom">Home</li>
                                 </Link>
-                                <Link to={"/Menu"}>
+                                <Link to="/Menu">
                                     <li className="nav-item ms-3 me-3 text-light btn btn-custom">Menu</li>
                                 </Link>
-                                <Link to={"/Contact"}>
+                                <Link to="/Contact">
                                     <li className="nav-item ms-3 me-3 text-light btn btn-custom">Contact</li>
                                 </Link>
                             </>
@@ -137,7 +113,7 @@ export default function Navbar2() {
                                 <FaUser />
                             </button>
                             {id && (
-                                <button className="btn bg-dark text-light" data-bs-toggle="offcanvas" data-bs-target="#myoff" >
+                                <button className="btn bg-dark text-light" onClick={() => setIsCartOpen(true)}>
                                     <FaShoppingCart />
                                 </button>
                             )}
@@ -166,54 +142,39 @@ export default function Navbar2() {
                     </div>
                 </div>
             </nav>
-            <div class="offcanvas offcanvas-end bg-dark" id="myoff">
-                <div className="offcanvas-header bg-light w-100">
-                    <h4 className="text-dark">Shopping Cart</h4>
-                    <button data-bs-dismiss="offcanvas" className="btn-close"></button>
-                </div>
-                <div className="offcanvas-body text-light ">
-                    <div className="">
+
+            {isCartOpen && (
+                <div className="custom-cart-sidebar bg-dark text-light position-fixed top-0 end-0 h-100 p-3 shadow" style={{ width: '350px', zIndex: 1050 }}>
+                    <div className="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                        <h5>Shopping Cart</h5>
+                        <button className="btn btn-sm btn-light" onClick={() => setIsCartOpen(false)}>X</button>
+                    </div>
+
+                    <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
                         {cartt.map((row) => (
-                            <div className="mt-1 border border-2">
-                                <div className="d-flex justify-content-between align-items-center p-2">
-                                    <img
-                                        src={row.Image}
-                                        className="img-fluid rounded me-3"
-                                        style={{ width: "70px", height: "auto" }}
-                                    />
-                                    {/* <div className="float-end ms-2"> */}
-                                    <div className="w-75">
-
-                                        <h6 className="text-capitalize">{row.Title}</h6>
-                                        <h6 className="text-capitalize">price - ₹{row.Price}</h6>
-
-                                        <span className="btn-group">
-                                            <button disabled={row.CartValue <= 1} className="btn btn-sm btn-outline-warning" onClick={() => {
-                                                if (row.CartValue > 1) {
-                                                    decre(row._id);
-                                                } else {
-                                                    // optionally remove item or show a message
-                                                }
-                                            }}>
-                                                <FaMinus size={15} />
+                            <div key={row._id} className="mb-3 border-bottom pb-2">
+                                <div className="d-flex align-items-center">
+                                    <img src={row.Image} alt={row.Title} style={{ width: 60, height: 60, objectFit: 'cover' }} className="me-2" />
+                                    <div className="flex-grow-1">
+                                        <h6 className="m-0">{row.Title}</h6>
+                                        <p className="m-0">₹{row.Price}</p>
+                                        <div className="btn-group mt-1">
+                                            <button className="btn btn-sm btn-outline-warning" disabled={row.CartValue <= 1} onClick={() => decre(row._id)}>
+                                                <FaMinus />
                                             </button>
-                                            <button className="btn btn-sm btn-light" disabled>
-                                                {row.CartValue}
-                                            </button>
+                                            <button className="btn btn-sm btn-light" disabled>{row.CartValue}</button>
                                             <button className="btn btn-sm btn-outline-warning" onClick={() => incre(row._id)}>
-                                                <FaPlus size={15} />
+                                                <FaPlus />
                                             </button>
-                                        </span>
-                                        <button className="btn text-warning float-end" onClick={() => deletee(row._id)}>
-                                            <MdDelete size={15} />
+                                        </div>
+                                        <button className="btn btn-sm text-danger float-end" onClick={() => deletee(row._id)}>
+                                            <MdDelete />
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </div>
-                <div class="offcanvas-footer text-light position-sticky">
                     <div className="mt-1 border border-2 p-2 table-responsive">
                         <table className="table table-dark">
                             <tbody>
@@ -239,7 +200,7 @@ export default function Navbar2() {
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </>
-    )
+    );
 }

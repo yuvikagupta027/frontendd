@@ -16,7 +16,7 @@ export default function Adminflavours() {
         var image = data.get("image");
         // var price = data.get("price");
 
-        axios.post("https://backend-6-r5ox.onrender.com/submitflavours", {
+        axios.post("http://localhost:1000/submitflavours", {
             Flavour: flavour,
             Description: description,
             Image: image,
@@ -32,7 +32,7 @@ export default function Adminflavours() {
     }
 
     function fetchflavours() {
-        axios.post("https://backend-6-r5ox.onrender.com/fetchflavours").then((succ) => {
+        axios.post("http://localhost:1000/fetchflavours").then((succ) => {
             setflavour(succ.data);
         })
     }
@@ -42,7 +42,7 @@ export default function Adminflavours() {
     }, [])
 
     function deleteee(x) {
-        axios.post("https://backend-6-r5ox.onrender.com/deleteflavour", {
+        axios.post("http://localhost:1000/deleteflavour", {
             Id: x
         }).then((succ) => {
             if (succ.data === "okk") {
